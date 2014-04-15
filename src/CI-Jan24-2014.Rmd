@@ -1,0 +1,65 @@
+U07m with Indices
+========================================================
+
+Just make sure to create the project directory in ProjectTemplate first, then create the project in RStudio using the existing directory.
+
+To create a new project called my-project, open R and type:
+library('ProjectTemplate')
+create.project('my-project')
+
+To enter that project’s home directory and start working, type:
+setwd('my-project')
+load.project()
+
+Once you have code worth testing, you can also type,
+run.tests()
+to automatically run all of the unit tests in your tests directory.
+To do work on such a project, enter the main directory, open R and type source('lib/boot.R'). This will then automatically perform the following actions:
+
+    source('lib/load_libraries.R'), which automatically loads the CRAN packages currently deemed best practices. At present, this list includes:
+        reshape
+        plyr
+        stringr
+        ggplot2
+        testthat
+    source('lib/load_data.R'), which automatically imports any CSV or TSV data files inside of the data/ directory.
+    source('lib/preprocess_data.R'), which allows you to make any run-time modifications to your data sets automatically. This is blank by default.
+
+
+```{r ProjectTemplate}
+library('ProjectTemplate')
+create.project('CompetitionIndexer')
+setwd('CompetitionIndexer')
+load.project()
+#source('/usr/lib/R/library/load_libraries.R')
+#??Searchpath
+.libPaths()
+U07mData<-read.csv("~/R/CompetitionIndexer/data/U07m2013Cleaned.csv",header=TRUE)
+head(U07mData)
+str(U07mData)
+boxplot(dbh~name,na.rm=TRUE,data=U07mData)  # not ordered by median
+# compute index of ordered 'cost factor' and reassign          
+oind <- order(as.numeric(by(U07mData$dbh, U07mData$name, median,na.rm=TRUE)))
+oind
+U07mMedian<-by(U07mData$dbh, U07mData$name, median,na.rm=TRUE)
+U07mMedian
+U07mData$name<- ordered(U07mData$name, levels=levels(U07mData$name)[oind])
+
+boxplot(dbh ~ name, data=U07mData, na.rm=TRUE,xlab="Full Sib Progeny Name",ylab="9-yr DBH (inches)",main="U07m-2005 alba/aspen Full Sib Progeny Trial (NM6 check clone)") # now it is ordered by median
+#####
+###help for this ordering from website 
+###< http://stackoverflow.com/questions/3765950/sorting-a-boxplot-based-on-median-value >
+
+```
+
+You can also embed plots, for example:
+
+```{r Deducer Generated Code}
+JGR()
+### reading in data to Deducer
+U07m2013Cleaned <- read.table("/home/bradfordbender/R/CompetitionIndexer/data/U07m2013Cleaned.csv",header=T,sep=",",quote="")
+
+
+
+```
+

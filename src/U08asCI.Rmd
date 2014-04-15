@@ -1,0 +1,104 @@
+U08as Competition Data Analysis
+========================================================
+seting environment at MSU desktop computer
+```{r set environment MSU} 
+setwd("C:/Users/Brad/Dropbox/R/CompetitionIndexer")
+library("Deducer", lib.loc="C:/Users/Brad/Documents/R/win-library/3.0")
+library("DeducerANOVA", lib.loc="C:/Users/Brad/Documents/R/win-library/3.0")
+library("DeducerExtras", lib.loc="C:/Users/Brad/Documents/R/win-library/3.0")
+library("knitr", lib.loc="C:/Users/Brad/Documents/R/win-library/3.0")
+library("manipulate", lib.loc="C:/Users/Brad/Documents/R/win-library/3.0")
+library("markdown", lib.loc="C:/Users/Brad/Documents/R/win-library/3.0")
+library("mgcv", lib.loc="C:/Program Files/R/R-3.0.2/library")
+library("shiny", lib.loc="C:/Users/Brad/Documents/R/win-library/3.0")
+library("UsingR", lib.loc="C:/Users/Brad/Documents/R/win-library/3.0")
+library("plotrix", lib.loc="C:/Users/Brad/Documents/R/win-library/3.0")
+
+
+```
+Set environment on Linux laptop
+```{r set environment laptop}
+setwd("~/Dropbox/R/CompetitionIndexer")
+library('ProjectTemplate')
+#using load.project() will run a global.dcf config script that will load a bunch of helper functions, packages, and data sets
+load.project()
+```
+Loading the Project Template and running startup scripts
+```{r ProjectTemplate}
+library('ProjectTemplate')
+load.project()
+```
+
+Loading data input to MSU windows desktop on dropbox directory
+```{r input data MSU}
+## some people do not realize that the 'colClasses' argument in
+#      read.table() is quite useful -- can avoid explicit conversion
+#d <- read.csv("C:/Users/Brad/Dropbox/R/CompetitionIndexer/data/u08asbasm1.csv",
+ # header = TRUE, colClasses = c("factor","factor","numeric","numeric"))
+# reading in Competition Indexer output file for U08as
+d<-U08asCI.Output <- read.csv("C:/Users/Brad/Dropbox/R/CompetitionIndexer/data/U08asCI-Output.csv")
+str(d)
+length(d$dbh)
+#subsetting rows, removing dbh NA values
+ds<-subset(d,d$dbh!="NA" & d$block!="5")
+length(ds$dbh)
+dss<-subset(ds,select=c(block,dbh,year,name,stemno,htave,basm,Area_Index,DBH_Ratio))
+length(dss$dbh)
+str(dss)
+dss$block<-as.factor(dss$block)
+str(dss)
+```
+Loading data on linux laptop on dropbox directory
+```{r input data laptop}
+## some people do not realize that the 'colClasses' argument in
+#      read.table() is quite useful -- can avoid explicit conversion
+d <- read.csv("~/Dropbox/R/CompetitionIndexer/data/u08asbasm1.csv",           
+  header = TRUE, colClasses = c("factor","factor","numeric","numeric"))
+str(d)
+```
+Making a plot with ggplot2
+```{r ggplot2}
+## ggplot2 version: geom = 'jitter'
+library(ggplot2)
+#qplot(clone, basm, data = d, colour = clone, geom = "jitter")
+
+oind <- order(as.numeric(by(dss$basm, dss$name, median,na.rm=TRUE)))
+oind
+dss$name<- ordered(dss$name, levels=levels(dss$name)[oind])
+
+#boxplot(basm ~ clone, data=d, na.rm=TRUE,xlab="Full Sib Progeny Name",ylab="4-yr basal area (square meters / hectare)",main="U08as-2010 alba clonal Trial (NM6 check clone)") # now it is ordered by median
+# control the amount of jitter
+p<-qplot(factor(name),basm, data = dss,  geom="boxplot",na.rm=TRUE,xlab="Clone Name",ylab="Basal Area (M^2 / ha)",main="U08as-2010 alba clonal Trial 4-year data (NM6 check clone)")
+p + geom_boxplot() + geom_jitter(aes(color=name)) + theme(axis.text.x = element_text(angle=-90,vjust=0.5, hjust=1))
+# make stripchart or point graph
+# order by mean rather than median
+oind <- order(as.numeric(by(dss$basm, dss$name, mean,na.rm=TRUE)))
+oind
+dss$name<- ordered(dss$name, levels=levels(dss$name)[oind])
+
+
+sc<-qplot(factor(name),basm,data=dss, geom="point",xlab="Family Member",ylab="Basal Area (Square Meters/Stool)",main="Figure 4. Variation in basal area per stool among clonal copies of 15 full-sibs \n of Populus alba family 83xAA04 after 4 growing seasons in a clonal trial \n in Escanaba, Michigan, USA" )
+#grid(nx=NULL,ny=NULL, lty=1, lwd = 2)
+#sc+ geom_point()+  geom_jitter(aes(color=clone))
+#sc+ geom_point(position=position_dodge(height=.9),aes(group=clone))
+#+ position_dodge(width=.1,aes(group=clone))
+#+ geom_jitter(position=position_jitter(width=.1))
+
+stripchart(dss$basm~dss$name,vertical=TRUE,method="stack",pch=19,
+           xlab="Family Member",
+           ylab="Basal Area (Square Meters/Stool)",
+           main="Figure 4. Variation in basal area per stool among clonal copies of 15 full-sibs \n of Populus alba family 83xAA04 after 4 growing seasons in a clonal trial \n in Escanaba, Michigan, USA")
+points(tapply(dss$basm, dss$name, mean,na.rm=TRUE), pch = 3,col="red")
+# Display both cross hairs and grid lines.
+#axis(2, col="red",lty=2, lwd=0.5)
+grid(nx=NULL,ny=NULL, lty="dashed", lwd = 1)
+warnings()
+length(dss$basm)
+           
+```
+looking at dbh and Area_Index
+```{r Competition Index}
+aov1<-aov(basm~name,data=dss)
+summary(aov1)
+boxplot(basm~name,data=dss)
+aov2<-aov(basm~name+block, data=dss)

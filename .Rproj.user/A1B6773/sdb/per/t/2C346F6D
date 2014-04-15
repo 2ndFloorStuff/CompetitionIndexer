@@ -1,0 +1,22 @@
+{
+    "contents" : "",
+    "created" : 1392999351101.000,
+    "dirty" : false,
+    "encoding" : "",
+    "folds" : "",
+    "hash" : "0",
+    "id" : "2C346F6D",
+    "lastKnownWriteTime" : 578055781,
+    "path" : null,
+    "project_path" : null,
+    "properties" : {
+        "caption" : "u07m_83_2013",
+        "contentUrl" : "content?title=u07m_83_2013&file=e9403708136a46b7b490095fabeb83ab.htm",
+        "displayedObservations" : 24,
+        "displayedVariables" : 47,
+        "totalObservations" : 24,
+        "variables" : 47
+    },
+    "source_on_save" : false,
+    "type" : "r_dataframe"
+}

@@ -1,0 +1,17 @@
+{
+    "contents" : "Title\n========================================================\n\nThis is an R Markdown document. Markdown is a simple formatting syntax for authoring web pages (click the **Help** toolbar button for more details on using R Markdown).\n\nWhen you click the **Knit HTML** button a web page will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:\n\n```{r}\n## some people do not realize that the 'colClasses' argument in\n#      read.table() is quite useful -- can avoid explicit conversion\nd <- read.csv(\"C:/Users/Brad/Dropbox/R/u08asbasm.csv\",\n                 header = TRUE, colClasses = c(\"factor\",\n        \"numeric\"))\nstr(d)\n## ggplot2 version: geom = 'jitter'\nlibrary(ggplot2)\n#qplot(clone, basm, data = d, colour = clone, geom = \"jitter\")\n\noind <- order(as.numeric(by(d$basm, d$clone, median,na.rm=TRUE)))\noind\nd$clone<- ordered(d$clone, levels=levels(d$clone)[oind])\n\n#boxplot(basm ~ clone, data=d, na.rm=TRUE,xlab=\"Full Sib Progeny Name\",ylab=\"4-yr basal area (square meters / hectare)\",main=\"U08as-2010 alba clonal Trial (NM6 check clone)\") # now it is ordered by median\n# control the amount of jitter\np<-qplot(factor(clone),basm, data = d,  geom=\"boxplot\",na.rm=TRUE,xlab=\"Clone Name\",ylab=\"Basal Area (M^2 / ha)\",main=\"U08as-2010 alba clonal Trial 4-year data (NM6 check clone)\")\np + geom_boxplot() + geom_jitter(aes(color=clone)) + theme(axis.text.x = element_text(angle=-90,vjust=0.5, hjust=1))\n\n\n```\n\nYou can also embed plots, for example:\n\n```{r fig.width=7, fig.height=6}\nplot(cars)\n```\n\n",
+    "created" : 1393368021321.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "4118016950",
+    "id" : "934C8990",
+    "lastKnownWriteTime" : 1393370347,
+    "path" : "C:/Users/Brad/Dropbox/R/U08asPLot.Rmd",
+    "project_path" : null,
+    "properties" : {
+        "tempName" : "Untitled1"
+    },
+    "source_on_save" : false,
+    "type" : "r_markdown"
+}

@@ -1,0 +1,127 @@
+U07m with Indices
+========================================================
+
+Just make sure to create the project directory in ProjectTemplate first, then create the project in RStudio using the existing directory.
+
+To create a new project called my-project, open R and type:
+library('ProjectTemplate')
+create.project('my-project')
+
+To enter that project’s home directory and start working, type:
+setwd('my-project')
+setwd("~/Dropbox/R/CompetitionIndexer")
+
+load.project()
+I have a already made a project called CompetitionIndexer.Rproj in the directory of Home/Dropbox/R/CompetitionIndexer
+
+
+Once you have code worth testing, you can also type,
+run.tests()
+to automatically run all of the unit tests in your tests directory.
+To do work on such a project, enter the main directory, open R and type source('lib/boot.R'). This will then automatically perform the following actions:
+
+    source('lib/load_libraries.R'), which automatically loads the CRAN packages currently deemed best practices. At present, this list includes:
+        reshape
+        plyr
+        stringr
+        ggplot2
+        testthat
+    source('lib/load_data.R'), which automatically imports any CSV or TSV data files inside of the data/ directory.
+    source('lib/preprocess_data.R'), which allows you to make any run-time modifications to your data sets automatically. This is blank by default.
+
+
+```{r ProjectTemplate}
+#create.project('CompetitionIndexer')
+setwd("~/Dropbox/R/CompetitionIndexer")
+library('ProjectTemplate')
+#using load.project() will run a global.dcf config script that will load a bunch of helper functions, packages, and data sets
+load.project()
+#source('/usr/lib/R/library/load_libraries.R')
+#??Searchpath
+.libPaths()
+```
+Loading libraries, not necessary if load.project() works
+```{r load libraries}
+library("ggplot2", lib.loc="/home/bradfordbender/R/x86_64-pc-linux-gnu-library/3.0")
+library("Hmisc", lib.loc="/home/bradfordbender/R/x86_64-pc-linux-gnu-library/3.0")
+library("knitr", lib.loc="/home/bradfordbender/R/x86_64-pc-linux-gnu-library/3.0")
+library("markdown", lib.loc="/home/bradfordbender/R/x86_64-pc-linux-gnu-library/3.0")
+library("MASS", lib.loc="/usr/lib/R/library")
+library("mgcv", lib.loc="/usr/lib/R/library")
+library("MVA", lib.loc="/home/bradfordbender/R/x86_64-pc-linux-gnu-library/3.0")
+library("plyr", lib.loc="/home/bradfordbender/R/x86_64-pc-linux-gnu-library/3.0")
+# library("Rcmdr", lib.loc="/usr/lib/R/site-library")
+library("rstudio", lib.loc="/home/bradfordbender/R/x86_64-pc-linux-gnu-library/3.0")
+library("shiny", lib.loc="/home/bradfordbender/R/x86_64-pc-linux-gnu-library/3.0")
+```
+Load U07m cleaned 9 year data (0 dbh's made "na")
+```{r load data make boxplots}
+
+U07mData<- read.csv("~/Dropbox/R/CompetitionIndexer/data/U07m2013Cleaned.csv")
+
+df<-U07mData
+# Check out first rows of data, and structure of the fields
+head(df)
+str(df)
+# make a boxplot of the dbh's grouped by progeny name
+boxplot(dbh~name,na.rm=TRUE,data=df)  # not ordered by median
+# compute index of ordered 'name' and reassign          
+oind <- order(as.numeric(by(df$dbh, df$name, median,na.rm=TRUE)))
+oind
+df$name<- ordered(df$name, levels=levels(df$name)[oind])
+
+boxplot(dbh ~ name, data=df, na.rm=TRUE,xlab="Full Sib Progeny Name",ylab="9-yr DBH (inches)",main="U07m-2005 alba/aspen Full Sib Progeny Trial (NM6 check clone)") # now it is ordered by median
+#####
+###help for this ordering from website 
+###< http://stackoverflow.com/questions/3765950/sorting-a-boxplot-based-on-median-value >
+
+```
+```{r ggplot2 boxplots}
+# control the amount of jitter
+p<-qplot(factor(name),dbh, data = df,  geom="boxplot",na.rm=TRUE,xlab="Full Sib Progeny Name",ylab="9-yr DBH (inches)",main="U07m-2005 alba/aspen Full Sib Progeny Trial (NM6 check clone)")
+p + geom_boxplot() + 
+  geom_jitter(aes(color=name),position=position_jitter(width=.1 ))+ 
+  theme(axis.text.x = element_text(angle=-90,vjust=0.5, hjust=1))
+
+```
+Other ggplot2 options for graphing
+```{r ggplot2 options}
+p + geom_boxplot(aes(fill = factor(name))+theme(axis.text.x = element_text(angle=-90,vjust=0.5, hjust=1)))
+
+p + geom_boxplot(notch=TRUE)+ geom_jitter(aes(color=name))+ 
+  theme(axis.text.x = element_text(angle=-90,vjust=0.5, hjust=1))
+
+p + geom_boxplot(notch=FALSE)+ geom_jitter(aes(color=name)+ 
+    theme(axis.text.x = element_text(angle=-90,vjust=0.5, hjust=1)))
+p + geom_boxplot(geom='error bar',notch=FALSE)+ geom_jitter(aes(color=name))
+
+
+```
+website help: < http://www.statmethods.net/advgraphs/ggplot2.html > 
+qplot(x, y, data=, color=, shape=, size=, alpha=, geom=, method=, formula=, facets=, xlim=, ylim= xlab=, ylab=, main=, sub=) 
+option   description
+alpha 	Alpha transparency for overlapping elements expressed as a fraction between 0 (complete transparency) and 1 (complete opacity)
+color, shape, size, fill 	Associates the levels of variable with symbol color, shape, or size. For line plots, color associates levels of a variable with line color. For density and box plots, fill associates fill colors with a variable. Legends are drawn automatically.
+data 	Specifies a data frame
+facets 	Creates a trellis graph by specifying conditioning variables. Its value is expressed as rowvar ~ colvar. To create trellis graphs based on a single conditioning variable, use rowvar~. or .~colvar)
+geom 	Specifies the geometric objects that define the graph type. The geom option is expressed as a character vector with one or more entries. geom values include "point", "smooth", "boxplot", "line", "histogram", "density", "bar", and "jitter".
+main, sub 	Character vectors specifying the title and subtitle
+method, formula 	If geom="smooth", a loess fit line and confidence limits are added by default. When the number of observations is greater than 1,000, a more efficient smoothing algorithm is employed. Methods include "lm" for regression, "gam" for generalized additive models, and "rlm" for robust regression. The formula parameter gives the form of the fit.
+
+For example, to add simple linear regression lines, you'd specify geom="smooth", method="lm", formula=y~x. Changing the formula to y~poly(x,2) would produce a quadratic fit. Note that the formula uses the letters x and y, not the names of the variables.
+
+For method="gam", be sure to load the mgcv package. For method="rml", load the MASS package.
+x, y 	Specifies the variables placed on the horizontal and vertical axis. For univariate plots (for example, histograms), omit y
+xlab, ylab 	Character vectors specifying horizontal and vertical axis labels
+xlim,ylim 	Two-element numeric vectors giving the minimum and maximum values for the horizontal and vertical axes, respectively
+
+
+# Separate regressions of mpg on weight for each number of cylinders
+
+qplot(wt, mpg, data=mtcars, geom=c("point", "smooth"),
+   method="lm", formula=y~x, color=cyl,
+   main="Regression of MPG on Weight",
+   xlab="Weight", ylab="Miles per Gallon")
+
+
+

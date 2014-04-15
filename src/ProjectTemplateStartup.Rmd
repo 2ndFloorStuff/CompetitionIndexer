@@ -1,0 +1,63 @@
+```{r load libraries}
+# Set working directory
+setwd("~/Dropbox/R/CompetitionIndexer")
+
+```
+Loading the Project Template and running startup scripts
+```{r ProjectTemplate}
+
+library('ProjectTemplate')
+#using load.project() will run a global.dcf config script that will load a bunch of helper functions, packages, and data sets
+load.project()
+```
+Loading up Java packages and starting JGR console with Deducer GUI packages
+```{r Iplots JGR Deducer}
+# Getting Java to work iplots and deducer need this
+Sys.setenv(NOAWT=1)
+library("rJava", lib.loc="/home/brad/R/x86_64-suse-linux-gnu-library/3.0")
+library("JavaGD", lib.loc="/home/brad/R/x86_64-suse-linux-gnu-library/3.0")
+library("iplots", lib.loc="/home/brad/R/x86_64-suse-linux-gnu-library/3.0")
+library("JGR", lib.loc="/home/brad/R/x86_64-suse-linux-gnu-library/3.0")
+library("Deducer", lib.loc="/home/brad/R/x86_64-suse-linux-gnu-library/3.0")
+library("DeducerExtras", lib.loc="/home/brad/R/x86_64-suse-linux-gnu-library/3.0")
+JGR()
+
+```
+Start Console JGR with Deducer GUI
+
+```{r laptop package loading}
+#This is how you load this libraries in Linux on Brad's laptop
+library("ggplot2", lib.loc="/home/bradfordbender/R/x86_64-pc-linux-gnu-library/3.0")
+library("Hmisc", lib.loc="/home/bradfordbender/R/x86_64-pc-linux-gnu-library/3.0")
+library("knitr", lib.loc="/home/bradfordbender/R/x86_64-pc-linux-gnu-library/3.0")
+library("markdown", lib.loc="/home/bradfordbender/R/x86_64-pc-linux-gnu-library/3.0")
+library("MASS", lib.loc="/usr/lib/R/library")
+library("mgcv", lib.loc="/usr/lib/R/library")
+library("MVA", lib.loc="/home/bradfordbender/R/x86_64-pc-linux-gnu-library/3.0")
+# library("Rcmdr", lib.loc="/usr/lib/R/site-library")
+library("rstudio", lib.loc="/home/bradfordbender/R/x86_64-pc-linux-gnu-library/3.0")
+library("shiny", lib.loc="/home/bradfordbender/R/x86_64-pc-linux-gnu-library/3.0")
+```
+this is how to load these packages on MSU desktopp
+```{r MSU package library}
+setwd("C:/Users/Brad/Dropbox/CompetitionIndexer")
+library("ggplot2", lib.loc="C:/Users/Brad/Documents/R/win-library/3.0")
+library("Hmisc", lib.loc="C:/Users/Brad/Documents/R/win-library/3.0")
+library("knitr", lib.loc="C:/Users/Brad/Documents/R/win-library/3.0")
+library("markdown", lib.loc="C:/Users/Brad/Documents/R/win-library/3.0")
+library("MASS", lib.loc="C:/Program Files/R/R-3.0.2/library")
+library("mgcv", lib.loc="C:/Program Files/R/R-3.0.2/library")
+library("rstudio", lib.loc="C:/Users/Brad/Documents/R/win-library/3.0")
+install.packages(c("MVA", "shiny"))
+library("JGR", lib.loc="C:/Users/Brad/Documents/R/win-library/3.0")
+library("Deducer", lib.loc="C:/Users/Brad/Documents/R/win-library/3.0")
+library("DeducerANOVA", lib.loc="C:/Users/Brad/Documents/R/win-library/3.0")
+library("DeducerExtras", lib.loc="C:/Users/Brad/Documents/R/win-library/3.0")
+#library("DeducerPlugInExample", lib.loc="C:/Users/Brad/Documents/R/win-library/3.0")
+#library("DeducerPlugInScaling", lib.loc="C:/Users/Brad/Documents/R/win-library/3.0")
+#library("DeducerRichOutput", lib.loc="C:/Users/Brad/Documents/R/win-library/3.0")
+#library("DeducerSpatial", lib.loc="C:/Users/Brad/Documents/R/win-library/3.0")
+#library("DeducerSurvival", lib.loc="C:/Users/Brad/Documents/R/win-library/3.0")
+#library("DeducerText", lib.loc="C:/Users/Brad/Documents/R/win-library/3.0")
+
+```

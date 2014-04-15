@@ -1,0 +1,91 @@
+U08as Data Analysis
+========================================================
+seting environment at MSU desktop computer
+```{r set environment MSU} 
+setwd("C:/Users/Brad/Dropbox/R/CompetitionIndexer")
+library("Deducer", lib.loc="C:/Users/Brad/Documents/R/win-library/3.0")
+library("DeducerANOVA", lib.loc="C:/Users/Brad/Documents/R/win-library/3.0")
+library("DeducerExtras", lib.loc="C:/Users/Brad/Documents/R/win-library/3.0")
+library("knitr", lib.loc="C:/Users/Brad/Documents/R/win-library/3.0")
+library("manipulate", lib.loc="C:/Users/Brad/Documents/R/win-library/3.0")
+library("markdown", lib.loc="C:/Users/Brad/Documents/R/win-library/3.0")
+library("mgcv", lib.loc="C:/Program Files/R/R-3.0.2/library")
+library("shiny", lib.loc="C:/Users/Brad/Documents/R/win-library/3.0")
+library("UsingR", lib.loc="C:/Users/Brad/Documents/R/win-library/3.0")
+library("plotrix", lib.loc="C:/Users/Brad/Documents/R/win-library/3.0")
+
+
+```
+Set environment on Linux laptop
+```{r set environment laptop}
+setwd("~/Dropbox/R/CompetitionIndexer")
+library('ProjectTemplate')
+#using load.project() will run a global.dcf config script that will load a bunch of helper functions, packages, and data sets
+load.project()
+```
+Loading the Project Template and running startup scripts
+```{r ProjectTemplate}
+library('ProjectTemplate')
+load.project()
+```
+
+Loading data input to MSU windows desktop on dropbox directory
+```{r input data MSU}
+## some people do not realize that the 'colClasses' argument in
+#      read.table() is quite useful -- can avoid explicit conversion
+d <- read.csv("C:/Users/Brad/Dropbox/R/CompetitionIndexer/data/u08asbasm1.csv",
+  header = TRUE, colClasses = c("factor","factor","numeric","numeric"))
+str(d)
+```
+Loading data on linux laptop on dropbox directory
+```{r input data laptop}
+## some people do not realize that the 'colClasses' argument in
+#      read.table() is quite useful -- can avoid explicit conversion
+d <- read.csv("~/Dropbox/R/CompetitionIndexer/data/u08asbasm1.csv",           
+  header = TRUE, colClasses = c("factor","factor","numeric","numeric"))
+str(d)
+```
+Making a plot with ggplot2
+```{r ggplot2}
+## ggplot2 version: geom = 'jitter'
+library(ggplot2)
+#qplot(clone, basm, data = d, colour = clone, geom = "jitter")
+
+oind <- order(as.numeric(by(d$basm, d$clone, median,na.rm=TRUE)))
+oind
+d$clone<- ordered(d$clone, levels=levels(d$clone)[oind])
+
+#boxplot(basm ~ clone, data=d, na.rm=TRUE,xlab="Full Sib Progeny Name",ylab="4-yr basal area (square meters / hectare)",main="U08as-2010 alba clonal Trial (NM6 check clone)") # now it is ordered by median
+# control the amount of jitter
+p<-qplot(factor(clone),basm, data = d,  geom="boxplot",na.rm=TRUE,xlab="Clone Name",ylab="Basal Area (M^2 / ha)",main="U08as-2010 alba clonal Trial 4-year data (NM6 check clone)")
+p + geom_boxplot() + geom_jitter(aes(color=clone)) + theme(axis.text.x = element_text(angle=-90,vjust=0.5, hjust=1))
+# make stripchart or point graph
+# order by mean rather than median
+oind <- order(as.numeric(by(d$basm, d$clone, mean,na.rm=TRUE)))
+oind
+d$clone<- ordered(d$clone, levels=levels(d$clone)[oind])
+sc<-qplot(factor(clone),basm,data=d, geom="point",xlab="Clones of various sibs of 83xAA04",ylab="Basal Area (m^2/stool)",main="Figure 22. Variation within clones of Populus alba family 83xAA04, 4th-yr data" )
+grid(nx=NULL,ny=NULL, lty=1, lwd = 2)
+#sc+ geom_point()+  geom_jitter(aes(color=clone))
+sc+ geom_point(position=position_dodge(height=.5),aes(group=clone))
++ position_dodge(width=.1,aes(group=clone))
+#+ geom_jitter(position=position_jitter(width=.1))
+
+stripchart(d$basm~d$clone,vertical=TRUE,method="stack",pch=19,
+           xlab="Clones of various 83xAA04 sibs",
+           ylab="Basal Area (m^2/stool)",
+           main="Figure 22. Variation within clones of Populus \n  alba family 83xAA04, 4th-yr data")
+points(tapply(d$basm, d$clone, mean), pch = 3,col="red")
+# Display both cross hairs and grid lines.
+#axis(2, col="red",lty=2, lwd=0.5)
+grid(nx=NULL,ny=NULL, lty="dashed", lwd = 1)
+           
+
+```
+
+You can also embed plots, for example:
+
+```{r fig.width=7, fig.height=6}
+plot(cars)
+```
+

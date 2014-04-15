@@ -1,0 +1,22 @@
+{
+    "contents" : "",
+    "created" : 1393368099882.000,
+    "dirty" : false,
+    "encoding" : "",
+    "folds" : "",
+    "hash" : "0",
+    "id" : "8D921594",
+    "lastKnownWriteTime" : 1836278114,
+    "path" : null,
+    "project_path" : null,
+    "properties" : {
+        "caption" : "u08asbasm",
+        "contentUrl" : "content?title=u08asbasm&file=0d1b1a4ffda84ac394d020dc91db1b1d.htm",
+        "displayedObservations" : 118,
+        "displayedVariables" : 2,
+        "totalObservations" : 118,
+        "variables" : 2
+    },
+    "source_on_save" : false,
+    "type" : "r_dataframe"
+}

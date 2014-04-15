@@ -1,0 +1,153 @@
+
+R version 3.0.3 (2014-03-06) -- "Warm Puppy"
+Copyright (C) 2014 The R Foundation for Statistical Computing
+Platform: i386-w64-mingw32/i386 (32-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+[Previously saved workspace restored]
+
+Loading required package: JGR
+Loading required package: rJava
+Loading required package: JavaGD
+Loading required package: iplots
+starting httpd help server ... done
+Loading required package: DeducerText
+Loading required package: Deducer
+Loading required package: ggplot2
+Loading required package: scales
+Loading required package: car
+Loading required package: multcomp
+Loading required package: mvtnorm
+Loading required package: survival
+Loading required package: splines
+
+Failed with error:  'package 'TH.data' required by 'multcomp' could not be found'
+Loading required package: DeducerSurvival
+Loading required package: Deducer
+Loading required package: multcomp
+Failed with error:  'package 'TH.data' required by 'multcomp' could not be found'
+Loading required package: DeducerSpatial
+Loading required package: Deducer
+Loading required package: multcomp
+Failed with error:  'package 'TH.data' required by 'multcomp' could not be found'
+Loading required package: DeducerRichOutput
+Loading required package: Deducer
+Loading required package: multcomp
+Failed with error:  'package 'TH.data' required by 'multcomp' could not be found'
+Loading required package: DeducerReshape
+Loading required package: Deducer
+Loading required package: multcomp
+Failed with error:  'package 'TH.data' required by 'multcomp' could not be found'
+Loading required package: DeducerPlugInScaling
+Loading required package: Deducer
+Loading required package: multcomp
+Failed with error:  'package 'TH.data' required by 'multcomp' could not be found'
+Loading required package: DeducerPlugInExample
+Loading required package: Deducer
+Loading required package: multcomp
+Failed with error:  'package 'TH.data' required by 'multcomp' could not be found'
+Loading required package: DeducerExtras
+Loading required package: Deducer
+Loading required package: multcomp
+Failed with error:  'package 'TH.data' required by 'multcomp' could not be found'
+Loading required package: DeducerANOVA
+Loading required package: Deducer
+Loading required package: multcomp
+Failed with error:  'package 'TH.data' required by 'multcomp' could not be found'
+Loading required package: Deducer
+Loading required package: multcomp
+Failed with error:  'package 'TH.data' required by 'multcomp' could not be found'
+> install.packages(c("TH.data"))
+Installing package into 'C:/Users/Brad/Documents/R/win-library/3.0'
+(as 'lib' is unspecified)
+--- Please select a CRAN mirror for use in this session ---
+trying URL 'http://cran.mtu.edu/bin/windows/contrib/3.0/TH.data_1.0-3.zip'
+Content type 'application/zip' length 4179923 bytes (4.0 Mb)
+opened URL
+downloaded 4.0 Mb
+
+package 'TH.data' successfully unpacked and MD5 sums checked
+
+The downloaded binary packages are in
+	C:\Users\Brad\AppData\Local\Temp\Rtmp8KHcnN\downloaded_packages
+> JGR::package.manager()
+java.lang.OutOfMemoryError: unable to create new native thread
+	at java.lang.Thread.start0(Native Method)
+	at java.lang.Thread.start(Unknown Source)
+	at org.rosuda.JGR.MonitoredEval.run(JGR.java:968)
+	at org.rosuda.JGR.JGR.timedEval(JGR.java:330)
+	at org.rosuda.JGR.JGR.timedEval(JGR.java:322)
+	at org.rosuda.JGR.RController.refreshPackages(RController.java:563)
+	at org.rosuda.JGR.JGRPackageManager.refresh(JGRPackageManager.java:263)
+	at org.rosuda.JGR.JGRPackageManager.showInstance(JGRPackageManager.java:244)
+	at org.rosuda.JRI.Rengine.rniRunMainLoop(Native Method)
+	at org.rosuda.JRI.Rengine.run(Rengine.java:640)
+> ERROR: while running main method: java.lang.reflect.InvocationTargetException
+java.lang.reflect.InvocationTargetException
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(Unknown Source)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(Unknown Source)
+	at java.lang.reflect.Method.invoke(Unknown Source)
+	at RJavaClassLoader.bootClass(RJavaClassLoader.java:532)
+	at RJavaClassLoader.main(RJavaClassLoader.java:602)
+Caused by: java.lang.OutOfMemoryError: unable to create new native thread
+	at java.lang.Thread.start0(Native Method)
+	at java.lang.Thread.start(Unknown Source)
+	at org.rosuda.JGR.MonitoredEval.run(JGR.java:968)
+	at org.rosuda.JGR.JGR.timedEval(JGR.java:330)
+	at org.rosuda.JGR.JGR.timedEval(JGR.java:322)
+	at org.rosuda.JGR.RController.createRObject(RController.java:637)
+	at org.rosuda.JGR.RController.refreshObjects(RController.java:487)
+	at org.rosuda.JGR.JGR$Refresher.run(JGR.java:892)
+	at org.rosuda.JGR.JGR.<init>(JGR.java:283)
+	at org.rosuda.JGR.JGR.main(JGR.java:850)
+	... 6 more
+JGR::package.manager()
+> library(Deducer)
+Loading required package: multcomp
+Loading required package: TH.data
+Loading required package: effects
+In addition: Warning message:
+In library(pkg, character.only = TRUE, logical.return = TRUE, lib.loc = lib.loc) :
+  there is no package called 'effects'
+> library(DeducerANOVA)
+Loading required package: Deducer
+Loading required package: effects
+In addition: Warning message:
+In library(pkg, character.only = TRUE, logical.return = TRUE, lib.loc = lib.loc) :
+  there is no package called 'effects'
+> library(DeducerExtras)
+Loading required package: Deducer
+Loading required package: effects
+In addition: Warning message:
+In library(pkg, character.only = TRUE, logical.return = TRUE, lib.loc = lib.loc) :
+  there is no package called 'effects'
+> library(DeducerReshape)
+Loading required package: Deducer
+Loading required package: effects
+In addition: Warning message:
+In library(pkg, character.only = TRUE, logical.return = TRUE, lib.loc = lib.loc) :
+  there is no package called 'effects'
+> library(dplyr)
+
+Attaching package: 'dplyr'
+
+The following objects are masked from 'package:stats':
+
+    filter, lag
+
+The following objects are masked from 'package:base':
+
+    intersect, setdiff, setequal, union
+

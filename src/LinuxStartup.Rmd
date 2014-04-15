@@ -1,0 +1,71 @@
+Use this file LinuxStartup.Rmd to Set the Environment
+========================================================
+
+This is an R Markdown document. Markdown is a simple formatting syntax for authoring web pages (click the **Help** toolbar button for more details on using R Markdown).
+
+When you click the **Knit HTML** button a web page will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+```{r load libraries}
+# Set working directory
+setwd("~/Dropbox/R/CompetitionIndexer")
+
+```
+Loading the Project Template and running startup scripts
+```{r ProjectTemplate}
+
+library('ProjectTemplate')
+#using load.project() will run a global.dcf config script that will load a bunch of helper functions, packages, and data sets
+load.project()
+```
+load rr packages
+```{r}
+library("apsrtable", lib.loc="/home/brad/R/x86_64-suse-linux-gnu-library/3.0")
+library("brew", lib.loc="/home/brad/R/x86_64-suse-linux-gnu-library/3.0")
+library("countrycode", lib.loc="/home/brad/R/x86_64-suse-linux-gnu-library/3.0")
+library("devtools", lib.loc="/home/brad/R/x86_64-suse-linux-gnu-library/3.0")
+library("digest", lib.loc="/home/brad/R/x86_64-suse-linux-gnu-library/3.0")
+library("formatR", lib.loc="/home/brad/R/x86_64-suse-linux-gnu-library/3.0")
+library("gdata", lib.loc="/home/brad/R/x86_64-suse-linux-gnu-library/3.0")
+library("ggplot2", lib.loc="/home/brad/R/x86_64-suse-linux-gnu-library/3.0")
+library("googleVis", lib.loc="/home/brad/R/x86_64-suse-linux-gnu-library/3.0")
+library("httr", lib.loc="/home/brad/R/x86_64-suse-linux-gnu-library/3.0")
+library("knitcitations", lib.loc="/home/brad/R/x86_64-suse-linux-gnu-library/3.0")
+library("markdown", lib.loc="/home/brad/R/x86_64-suse-linux-gnu-library/3.0")
+library("openair", lib.loc="/home/brad/R/x86_64-suse-linux-gnu-library/3.0")
+library("plyr", lib.loc="/home/brad/R/x86_64-suse-linux-gnu-library/3.0")
+library("quantmod", lib.loc="/home/brad/R/x86_64-suse-linux-gnu-library/3.0")
+library("repmis", lib.loc="/home/brad/R/x86_64-suse-linux-gnu-library/3.0")
+library("RJSONIO", lib.loc="/home/brad/R/x86_64-suse-linux-gnu-library/3.0")
+library("stargazer", lib.loc="/home/brad/R/x86_64-suse-linux-gnu-library/3.0")
+library("texreg", lib.loc="/home/brad/R/x86_64-suse-linux-gnu-library/3.0")
+library("tools", lib.loc="/usr/lib64/R/library")
+library("treebase", lib.loc="/home/brad/R/x86_64-suse-linux-gnu-library/3.0")
+library("twitteR", lib.loc="/home/brad/R/x86_64-suse-linux-gnu-library/3.0")
+library("WDI", lib.loc="/home/brad/R/x86_64-suse-linux-gnu-library/3.0")
+library("XML", lib.loc="/home/brad/R/x86_64-suse-linux-gnu-library/3.0")
+library("xtable", lib.loc="/home/brad/R/x86_64-suse-linux-gnu-library/3.0")
+library("Zelig", lib.loc="/home/brad/R/x86_64-suse-linux-gnu-library/3.0")
+library("reshape2", lib.loc="/home/brad/R/x86_64-suse-linux-gnu-library/3.0")
+library("shiny", lib.loc="/home/brad/R/x86_64-suse-linux-gnu-library/3.0")
+library("data.table", lib.loc="/home/brad/R/x86_64-suse-linux-gnu-library/3.0")
+library("dplyr", lib.loc="/home/brad/R/x86_64-suse-linux-gnu-library/3.0")
+library("HSAUR2", lib.loc="/home/brad/R/x86_64-suse-linux-gnu-library/3.0")
+library("ProjectTemplate", lib.loc="/home/brad/R/x86_64-suse-linux-gnu-library/3.0")
+library("rstudio", lib.loc="/home/brad/R/x86_64-suse-linux-gnu-library/3.0")
+library("TH.data", lib.loc="/home/brad/R/x86_64-suse-linux-gnu-library/3.0")
+library("UsingR", lib.loc="/home/brad/R/x86_64-suse-linux-gnu-library/3.0")
+library("e1071", lib.loc="/home/brad/R/x86_64-suse-linux-gnu-library/3.0")
+```
+Loading up Java packages and starting JGR console with Deducer GUI packages
+```{r Iplots JGR Deducer}
+# Getting Java to work iplots and deducer need this
+Sys.setenv(NOAWT=1)
+library("rJava", lib.loc="/home/brad/R/x86_64-suse-linux-gnu-library/3.0")
+library("JavaGD", lib.loc="/home/brad/R/x86_64-suse-linux-gnu-library/3.0")
+library("iplots", lib.loc="/home/brad/R/x86_64-suse-linux-gnu-library/3.0")
+library("JGR", lib.loc="/home/brad/R/x86_64-suse-linux-gnu-library/3.0")
+library("Deducer", lib.loc="/home/brad/R/x86_64-suse-linux-gnu-library/3.0")
+library("DeducerExtras", lib.loc="/home/brad/R/x86_64-suse-linux-gnu-library/3.0")
+JGR()
+R.version
+sessionInfo()
+```

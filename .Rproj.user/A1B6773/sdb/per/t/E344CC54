@@ -1,0 +1,16 @@
+{
+    "contents" : "\"simple.hist.and.boxplot\" <-\n  function (x,...) {\n    ## Plot both the histogram and the boxplot\n    ## to show relationship easily.\n    op<-par(no.readonly=TRUE)\n    on.exit(par(op))\n    layout(matrix(c(1,2),2,1),heights=c(3,1))\n    par(mai=c(1,1,1,1)/2)\n    hist(x,xlab=FALSE,col=gray(0.95),yaxt='n',...)\n    rug(x)\n    boxplot(x,horizontal=TRUE)\n  }\n",
+    "created" : 1393002784267.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "3943804245",
+    "id" : "E344CC54",
+    "lastKnownWriteTime" : 1392995310,
+    "path" : "C:/Users/Brad/Dropbox/CompetitionIndexer/lib/simple.hist.and.boxplot.R",
+    "project_path" : null,
+    "properties" : {
+    },
+    "source_on_save" : false,
+    "type" : "r_source"
+}
